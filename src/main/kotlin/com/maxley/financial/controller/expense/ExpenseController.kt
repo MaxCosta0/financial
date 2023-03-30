@@ -3,7 +3,7 @@ package com.maxley.financial.controller.expense
 import com.maxley.financial.controller.expense.request.AddExpenseRequest
 import com.maxley.financial.controller.expense.response.AddExpenseResponse
 import com.maxley.financial.service.expense.ExpenseService
-import jakarta.validation.Valid
+import javax.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
