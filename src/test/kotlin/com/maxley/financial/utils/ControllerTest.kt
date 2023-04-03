@@ -1,27 +1,28 @@
 package com.maxley.financial.utils
 
-import com.maxley.financial.configuration.TestContainerConfiguration
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
-import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.junit.jupiter.Container
-import org.testcontainers.junit.jupiter.Testcontainers
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.ResultActions
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 
-@Testcontainers
-@DataJpaTest
-class ControllerTest {
-    companion object {
-        @Container
-        val container: PostgreSQLContainer<Nothing> = TestContainerConfiguration.container
+@SpringBootTest
+@AutoConfigureMockMvc
+open class ControllerTest {
 
-        @DynamicPropertySource
-        @JvmStatic
-        fun postgreSQLProperties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.datasource.url", container::getJdbcUrl)
-            registry.add("spring.datasource.username", container::getUsername)
-            registry.add("spring.datasource.password", container::getPassword)
-        }
+    @Autowired
+    private lateinit var mockMvc: MockMvc
+
+    fun performPost(path: String, requestBody: String): ResultActions {
+       return mockMvc.perform(
+            MockMvcRequestBuilders.post(path)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody)
+        )
+
     }
+
 }
