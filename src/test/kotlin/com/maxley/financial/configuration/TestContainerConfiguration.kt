@@ -10,9 +10,9 @@ import org.testcontainers.junit.jupiter.Testcontainers
 open class TestContainerConfiguration {
     companion object {
         private const val IMAGE_VERSION = "postgres:14"
-        private const val DB_NAME = "test"
-        private const val DB_USER = "test"
-        private const val DB_PASSWORD = "test"
+        private const val DB_NAME = "postgres"
+        private const val DB_USER = "admin"
+        private const val DB_PASSWORD = "change123"
 
         @Container
         val container = PostgreSQLContainer<Nothing>(IMAGE_VERSION).apply {

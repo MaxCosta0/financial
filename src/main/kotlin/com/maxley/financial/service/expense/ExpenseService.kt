@@ -6,6 +6,7 @@ import com.maxley.financial.controller.expense.response.AddExpenseResponse
 import com.maxley.financial.controller.expense.response.ExpenseResponse
 import com.maxley.financial.entity.expense.Expense
 import com.maxley.financial.repository.expense.ExpenseRepository
+import com.maxley.financial.utils.pagination.GenericPagination
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
@@ -16,35 +17,38 @@ class ExpenseService(
     private val expenseRepository: ExpenseRepository
 ) {
 
-    fun addExpense(
-        addExpenseRequest: AddExpenseRequest
-    ): AddExpenseResponse {
+//    fun addExpense(
+//        addExpenseRequest: AddExpenseRequest
+//    ): AddExpenseResponse {
+//
+//        return addExpenseRequest.toEntity()
+//            .also {
+//                expenseRepository.save(it)
+//            }.let {
+//                AddExpenseResponse.fromEntity(it)
+//            }
+//    }
 
-        return addExpenseRequest.toEntity()
-            .also {
-                expenseRepository.save(it)
+    fun getAllExpensesByType(
+        expenseType: ExpenseType?,
+        pageable: Pageable,
+        userId: String
+    ): Page<ExpenseResponse> {
+
+        return findExpensesBy(expenseType)
+            .let {
+                it.toExpenseResponseList()
             }.let {
-                AddExpenseResponse.fromEntity(it)
+                GenericPagination.of(it, pageable)
             }
     }
 
-    fun getAllExpensesByType(
-        expenseType: ExpenseType,
-        pageable: Pageable
-    ): Page<ExpenseResponse> {
-
-        return expenseRepository.findAllByExpenseTypeContainingIgnoreCase(
-            expenseType = expenseType.name,
-            pageable = pageable
-        ).let {
-            it.toExpenseResponseList()
-        }.let {
-            PageImpl(
-                it,
-                pageable,
-                it.size.toLong()
-            )
-        }
+    private fun findExpensesBy(expenseType: ExpenseType?) = if (expenseType == null) {
+        expenseRepository.findAll()
+    } else {
+        expenseRepository.findAllByExpenseTypeContaining(
+            expenseType = expenseType.name
+        )
     }
 }
 

@@ -1,0 +1,3 @@
+DELETE
+FROM expense
+WHERE 1 = 1;

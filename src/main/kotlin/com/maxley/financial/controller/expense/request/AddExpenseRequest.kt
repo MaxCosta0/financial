@@ -18,6 +18,8 @@ enum class ExpenseType {
 }
 
 data class AddExpenseRequest(
+    val name: String?,
+
     @NotNull
     val amount: BigDecimal,
 
@@ -26,15 +28,16 @@ data class AddExpenseRequest(
 
     val date: LocalDate = LocalDate.now(),
 
-    val installments: Int = 0
+    val installments: Int = 0,
 ) {
 
-    fun toEntity(): Expense {
-        return Expense(
-            amount = this.amount,
-            expenseType = this.expenseType,
-            startDate = this.date,
-            endDate = this.date.plusMonths(installments.toLong())
-        )
-    }
+//    fun toEntity(): Expense {
+//        return Expense(
+//            amount = this.amount,
+//            expenseType = this.expenseType,
+//            startDate = this.date,
+//            endDate = this.date.plusMonths(installments.toLong()),
+//            name = this.name
+//        )
+//    }
 }

@@ -5,8 +5,9 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 data class ExpenseResponse(
+    val name: String? = "Unknown",
     val amount: BigDecimal,
     val startDate: LocalDate,
-    val endDate: LocalDate,
+    val endDate: LocalDate?,
     val expenseType: ExpenseType
 )
