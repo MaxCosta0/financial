@@ -1,8 +1,6 @@
 package com.maxley.financial.controller.expense
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.maxley.financial.configuration.TestContainerConfiguration
-import com.maxley.financial.repository.expense.ExpenseRepository
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.`is`
 import org.junit.jupiter.api.Test
@@ -31,24 +29,20 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class ExpenseControllerTest : TestContainerConfiguration() {
 
     @Autowired
-    lateinit var expenseRepository: ExpenseRepository
-
-    @Autowired
     private lateinit var mockMvc: MockMvc
-
-    @Autowired
-    private lateinit var mapper: ObjectMapper
 
     @Test
     fun shouldPaginateListOfExpenses() {
 
+        val userId = "694c9781-f7e8-44cc-b19a-80c4450f5303"
+
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/v1/expense")
+            MockMvcRequestBuilders.get("/v1/user/$userId/expense")
                 .queryParam("page", "0")
-                .queryParam("size", "3")
+                .queryParam("size", "2")
         ).andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.jsonPath("$.content", hasSize<Int>(3)))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.totalPages", `is`(3)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.totalPages", `is`(2)))
     }
 }

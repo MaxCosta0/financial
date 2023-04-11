@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
-    <include file="/db/changelog/2023-04-10-18-23-create-table-user.xml"/>
+    <include file="/db/changelog/2023-04-10-18-23-create-table-customer.xml"/>
     <include file="/db/changelog/2023-04-10-18-35-create-table-expense.xml"/>
 
 </databaseChangeLog>

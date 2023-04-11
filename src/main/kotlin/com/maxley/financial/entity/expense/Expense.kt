@@ -1,7 +1,8 @@
 package com.maxley.financial.entity.expense
 
+import com.maxley.financial.controller.expense.request.AddExpenseRequest
 import com.maxley.financial.controller.expense.request.ExpenseType
-import com.maxley.financial.entity.user.User
+import com.maxley.financial.entity.user.Customer
 import java.math.BigDecimal
 import java.time.LocalDate
 import javax.persistence.Entity
@@ -33,6 +34,19 @@ class Expense(
     val expenseType: ExpenseType,
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    val user: User
-)
+    @JoinColumn(name = "customer_id")
+    val customer: Customer? = null
+) {
+    companion object {
+        fun of(expenseRequest: AddExpenseRequest, customer: Customer): Expense {
+            return Expense(
+                name = expenseRequest.name,
+                amount = expenseRequest.amount,
+                startDate = expenseRequest.date,
+                endDate = expenseRequest.date.plusMonths(expenseRequest.installments.toLong()),
+                expenseType = expenseRequest.expenseType,
+                customer = customer
+            )
+        }
+    }
+}

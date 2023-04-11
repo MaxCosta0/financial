@@ -6,7 +6,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
     <changeSet id="2023-04-10-18-23" author="maxley">
-        <createTable tableName="user" remarks="A table to contain all users">
+        <createTable tableName="customer" remarks="A table to contain all customers">
 
             <column name="id" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true" primaryKey="true"/>

@@ -11,7 +11,7 @@ import javax.validation.constraints.Email
 import org.hibernate.annotations.GenericGenerator
 
 @Entity
-class User(
+class Customer(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -24,6 +24,6 @@ class User(
 
     val photoToken: String,
 
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = [CascadeType.ALL], orphanRemoval = true)
     val expenses: List<Expense>
 )

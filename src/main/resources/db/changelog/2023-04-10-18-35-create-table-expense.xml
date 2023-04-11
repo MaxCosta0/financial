@@ -28,8 +28,8 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="user_id" type="VARCHAR(255)">
-                <constraints referencedTableName="user" referencedColumnNames="id" foreignKeyName="user_id_fk"/>
+            <column name="customer_id" type="VARCHAR(255)">
+                <constraints referencedTableName="customer" referencedColumnNames="id" foreignKeyName="customer_id_fk"/>
             </column>
 
         </createTable>

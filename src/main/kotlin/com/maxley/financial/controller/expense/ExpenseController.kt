@@ -25,13 +25,17 @@ import org.springframework.web.bind.annotation.RestController
 class ExpenseController(
     private val expenseService: ExpenseService
 ) {
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    fun addExpense(
-//        @Valid @RequestBody addExpenseRequest: AddExpenseRequest
-//    ): AddExpenseResponse {
-//        return expenseService.addExpense(addExpenseRequest = addExpenseRequest)
-//    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addExpense(
+        @Valid @RequestBody addExpenseRequest: AddExpenseRequest,
+        @PathVariable("userId") userId: String
+    ): AddExpenseResponse {
+        return expenseService.addExpense(
+            addExpenseRequest = addExpenseRequest,
+            userId = userId
+        )
+    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
